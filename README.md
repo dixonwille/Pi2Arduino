@@ -1,12 +1,15 @@
-Arduino communicating with Node.js Experiment.
-To make this work you will need to download the socket.io and serialPort modules in the node_modules folder. 
+#PI2Arduino
+This project is at its early stages of development. Many tutorials are already out there to get the Raspberry Pi and Arduino to communicate. My goal is to create a heavily commented structure of what is needed. I went with using Node.js because I wanted to make the Arduino respond to Twitter. That was my first though, but now that I have looking into it it seems that there is more potential then just Twitter.
 
-The application is run by executing index.js (node index.js)
+##Current Standings
+I currently have 4 buttons in an html file that are used to controll the color of my RGB LED that is connected to my Arduino.
 
-THIS IS AN EXPERIMENT AND THEREFORE FAR FROM PERFECT!
+##Prerequisits
+1. Arduino Uno (I am using R3)
+2. Raspberry Pi (Model B) that is already booted
+3. Node.js, Socket.IO, and serialPort installed on the Raspberry Pi (Will Cover tutorial later)
 
-Credit goes to Barry.
+##Pictures of my setup
+![Screenshot](pics/RGBDiagram.png)
 
-I, Will, have edited his version to suit my needs. All I really did was change the arduino code.
-I made it more user friendly. Instead of a potentiometer and two LED's I used one RGB LED connected
-to PWM pins and 5V.
+![Screenshot](pics/RGBSchem.png)
