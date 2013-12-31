@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+ <html>
+   <head>    
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <style>
+	body {
+		margin: 0px;
+		padding: 0px;
+        }
+	h2{
+		text-align:center;
+	}
+	#btnHolder{
+		text-align:center;
+	}
+    </style>
+        <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+    <script>	  
+	var iosocket;
+	  
+	function initSocketIO()
+	{
+		iosocket = io.connect();
+		iosocket.on('onconnection', function() {
+			initButtons();				
+	    	});
+	}
+	
+	function initButtons()
+	{
+	   $( "#red" ).button();
+	   $( "#green" ).button();
+	   $( "#blue" ).button();
+	   $( "#off" ).button();
+	}
+	
+	window.onload = function() {
+	     initSocketIO();
+        };
+      
+      $(document).ready(function() {
+        $('#red').click(function() {
+	    iosocket.emit('buttonRed');
+	 });
+        $('#green').click(function() {
+	    iosocket.emit('buttonGreen');
+	 });
+        $('#blue').click(function() {
+	    iosocket.emit('buttonBlue');
+	 });
+        $('#off').click(function() {
+	    iosocket.emit('buttonOff');
+	 });
+
+	});
+    </script>
+  </head>
+  <body>
+	<h2>Data to Arduino</h2>
+	<div id="btnHolder">
+	  <input type="checkbox" id="red" value="toggle"/><label for="red">Red</label>
+	</div>
+	<div id="btnHolder">
+	  <input type="checkbox" id="green" value="toggle"/><label for="green">Green</label>
+	</div>
+	<div id="btnHolder">
+	  <input type="checkbox" id="blue" value="toggle"/><label for="blue">Blue</label>
+	</div>
+	<div id="btnHolder">
+	  <input type="checkbox" id="off" value="toggle"/><label for="off">Off</label>
+	</div>
+  </body>
+</html>
