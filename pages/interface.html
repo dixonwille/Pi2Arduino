@@ -1,23 +1,7 @@
 <!DOCTYPE HTML>
  <html>
    <head>    
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
-    <style>
-	body {
-		margin: 0px;
-		padding: 0px;
-        }
-	h2{
-		text-align:center;
-	}
-	#btnHolder{
-		text-align:center;
-	}
-    </style>
- <!--       <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>-->
 	<script src="/socket.io/socket.io.js"></script>
-	<script src="jscolor.js"></script>
     <script>	  
 	var iosocket;
 	  
@@ -31,46 +15,64 @@
 	
 	function initButtons()
 	{
-	   $( "#red" ).button();
-	   $( "#green" ).button();
-	   $( "#blue" ).button();
-	   $( "#off" ).button();
+		var redBut = document.getElementById("red");
+		var greenBut = document.getElementById("green");
+		var blueBut = document.getElementById("blue");
+		var offBut = document.getElementById("off");
+		
+		if(redBut.addEventListener){
+                	redBut.addEventListener("click", function() {
+				iosocket.emit('buttonRed');
+			}, false);
+                } else if(redBut.attachEvent){
+			redBut.attachEvent("onclick", function() {
+				iosocket.emit('buttonRed');
+			;});
+                }
+
+		if(greenBut.addEventListener){
+                	greenBut.addEventListener("click", function() {
+				iosocket.emit('buttonGreen');
+			}, false);
+                } else if(greenBut.attachEvent){
+			button.attachEvent("onclick", function() {
+				iosocket.emit('buttoGreen');
+			;});
+                }
+
+		if(blueBut.addEventListener){
+                	blueBut.addEventListener("click", function() {
+				iosocket.emit('buttonBlue');
+			}, false);
+                } else if(blueBut.attachEvent){
+			blueBut.attachEvent("onclick", function() {
+				iosocket.emit('buttonBlue');
+			;});
+                }
+
+		if(offBut.addEventListener){
+                	offBut.addEventListener("click", function() {
+				iosocket.emit('buttonOff');
+			}, false);
+                } else if(offBut.attachEvent){
+			button.attachEvent("onclick", function() {
+				iosocket.emit('buttonOff');
+			;});
+                }
 	}
 	
 	window.onload = function() {
 	     initSocketIO();
         };
       
-      $(document).ready(function() {
-        $('#red').click(function() {
-	    iosocket.emit('buttonRed');
-	 });
-        $('#green').click(function() {
-	    iosocket.emit('buttonGreen');
-	 });
-        $('#blue').click(function() {
-	    iosocket.emit('buttonBlue');
-	 });
-        $('#off').click(function() {
-	    iosocket.emit('buttonOff');
-	 });
-
-	});
     </script>
   </head>
   <body>
 	<h2>Data to Arduino</h2>
-	<div id="btnHolder">
-	  <input type="checkbox" id="red" value="toggle"/><label for="red">Red</label>
-	</div>
-	<div id="btnHolder">
-	  <input type="checkbox" id="green" value="toggle"/><label for="green">Green</label>
-	</div>
-	<div id="btnHolder">
-	  <input type="checkbox" id="blue" value="toggle"/><label for="blue">Blue</label>
-	</div>
-	<div id="btnHolder">
-	  <input type="checkbox" id="off" value="toggle"/><label for="off">Off</label>
-	</div>
+	<input type="button" id="red" value="Red"/>
+	<input type="button" id="green" value="Green"/>
+	<input type="button" id="blue" value="Blue"/>
+	<input type="button" id="off" value="Off"/></br>
+	
   </body>
 </html>
