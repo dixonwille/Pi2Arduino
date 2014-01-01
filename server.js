@@ -1,5 +1,5 @@
-var fs = require('fs')
-,http = require('http'),
+var fs = require('fs'),
+http = require('http'),
 socketio = require('socket.io'),
 url = require("url"), 
 SerialPort = require("serialport").SerialPort
@@ -24,7 +24,7 @@ function startServer(route,handle,debug)
 	
 	var httpServer = http.createServer(onRequest).listen(8080, function(){
 		console.log("Listening at: http://localhost:8080");
-		console.log("Server is up");
+		console.log("http Server is up");
 	}); 
 	serialListener(debug);
 	initSocketIO(httpServer,debug);
@@ -52,7 +52,7 @@ function initSocketIO(httpServer,debug)
 			serialPort.write('O');
 		});
 		socket.on('pickerUp', function(data) {
-			serialPort.write(data.red + ',' + data.green + ',' + data.blue + 'U');
+			serialPort.write(data['red'] + ',' + data['green'] + ',' + data['blue'] + 'U');
 		});
 	
     	});
@@ -72,7 +72,7 @@ function serialListener(debug)
     });
  
     serialPort.on("open", function () {
-      console.log('open serial communication');
+      console.log('open serial communication for http');
             // Listens to incoming data
        // serialPort.on('data', function(data) {
           //   receivedData += data.toString();

@@ -79,7 +79,7 @@ void loop() {
           Serial.println("LED Blue");
           clearString();
          }   
-     delay(50);    
+     delay(100);    
   }
 }
 void clearString(){

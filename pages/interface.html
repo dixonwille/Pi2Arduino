@@ -4,61 +4,90 @@
 	   <script src="/socket.io/socket.io.js"></script>
 	   <script type="text/javascript" src="colorpicker.js"></script>
 	   <link rel="stylesheet" type="text/css" href="themes.css" />
-    <script>	  
+    <script type="text/javascript">	  
 	var iosocket;
 	  
 	function initSocketIO()
 	{
 		iosocket = io.connect();
 		iosocket.on('onconnection', function() {
+			initText();
 			initButtons();				
 	    	});
 	}
-	
+	function initText(){
+		redText = document.getElementById("rText");
+		greenText = document.getElementById("gText");
+		blueText = document.getElementById("bText");
+	}	
+	function changeText(red,green,blue){
+		redText.value=red;
+		greenText.value=green;
+		blueText.value=blue;
+	}
 	function initButtons()
 	{
 		var redBut = document.getElementById("red");
 		var greenBut = document.getElementById("green");
 		var blueBut = document.getElementById("blue");
 		var offBut = document.getElementById("off");
-		
+		var updateBut = document.getElementById("update");		
+
 		if(redBut.addEventListener){
                 	redBut.addEventListener("click", function() {
+				changeText('255','0','0');
 				iosocket.emit('buttonRed');
 			}, false);
                 } else if(redBut.attachEvent){
 			redBut.attachEvent("onclick", function() {
+				changeText('255','0','0');
 				iosocket.emit('buttonRed');
 			;});
                 }
 
 		if(greenBut.addEventListener){
                 	greenBut.addEventListener("click", function() {
+				changeText('0','255','0');
 				iosocket.emit('buttonGreen');
 			}, false);
                 } else if(greenBut.attachEvent){
 			button.attachEvent("onclick", function() {
+				changeText('0','255','0');
 				iosocket.emit('buttoGreen');
 			;});
                 }
 
 		if(blueBut.addEventListener){
                 	blueBut.addEventListener("click", function() {
+				changeText('0','0','255');
 				iosocket.emit('buttonBlue');
 			}, false);
                 } else if(blueBut.attachEvent){
 			blueBut.attachEvent("onclick", function() {
+				changeText('0','0','255');
 				iosocket.emit('buttonBlue');
 			;});
                 }
 
 		if(offBut.addEventListener){
                 	offBut.addEventListener("click", function() {
+				changeText('0','0','0');
 				iosocket.emit('buttonOff');
 			}, false);
                 } else if(offBut.attachEvent){
-			button.attachEvent("onclick", function() {
+			offBut.attachEvent("onclick", function() {
+				changeText('0','0','0');
 				iosocket.emit('buttonOff');
+			;});
+		}
+
+		if(updateBut.addEventListener){
+                	updateBut.addEventListener("click", function() {
+				iosocket.emit('pickerUp',{red:redText.value,green:greenText.value,blue:blueText.value});
+			}, false);
+                } else if(updateBut.attachEvent){
+			updateBut.attachEvent("onclick", function() {
+				iosocket.emit('pickerUp',{red:redText.value,green:greenText.value,blue:blueText.value});
 			;});
                 }
 	}
@@ -75,12 +104,18 @@
 	<input type="button" id="green" value="Green"/>
 	<input type="button" id="blue" value="Blue"/>
 	<input type="button" id="off" value="Off"/></br>
+	<input type="text" id="rText" value="0"/>
+	<input type="text" id="gText" value="0"/>
+	<input type="text" id="bText" value="0"/>
+	<input type="button" id="update" value="Update"/></br>
+	The Red on the LED is very Bright half it to get the result you might be looking for!</br>
 	<div id="color-picker" class="cp-default"></div>
 
 	<script type="text/javascript">
 		ColorPicker(document.getElementById('color-picker'),function(hex,hsv,rgb){
-				iosocket.emit('pickerUp', {red:rgb.r, green:rgb.g, blue:rgb.b});
-				document.body.style.backgroundColor = hex;
+				redText.value=rgb.r;
+				greenText.value=rgb.g;
+				blueText.value=rgb.b;	
 			});
 	</script>	
   </body>
