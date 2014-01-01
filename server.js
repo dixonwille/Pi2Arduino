@@ -51,6 +51,9 @@ function initSocketIO(httpServer,debug)
 		socket.on('buttonOff', function() {
 			serialPort.write('O');
 		});
+		socket.on('pickerUp', function(red,green,blue) {
+			serialPort.write(red + ',' + green + ',' + blue + 'U');
+		});
 	
     	});
 }
