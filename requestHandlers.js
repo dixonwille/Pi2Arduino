@@ -12,4 +12,18 @@ function sendInterface(response) {
   response.end(html);
 }
 
+function sendThemes(response) {
+ response.writeHead(200, {"Content-Type": "text/css"});
+ var css = fs.readFileSync(__dirname + "/pages/themes.css");
+ response.end(css);
+};
+
+function sendColor(response) {
+ response.writeHead(200, {"Content-Type": "text/javascript"});
+ var java = fs.readFileSync(__dirname + "/pages/colorpicker.js");
+ response.end(java);
+};
+
+exports.sendThemes = sendThemes;
+exports.sendColor = sendColor;
 exports.sendInterface = sendInterface;

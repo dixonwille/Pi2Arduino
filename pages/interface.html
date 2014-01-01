@@ -3,6 +3,7 @@
    <head>    
 	   <script src="/socket.io/socket.io.js"></script>
 	   <script type="text/javascript" src="colorpicker.js"></script>
+	   <link rel="stylesheet" type="text/css" href="themes.css" />
     <script>	  
 	var iosocket;
 	  
@@ -79,6 +80,8 @@
 	<script type="text/javascript">
 		ColorPicker(document.getElementById('color-picker'),function(hex,hsv,rgb){
 				console.log(rgb.r, rgb.g, rgb.b);
-			});	
+				document.body.style.backgroundColor = hex;
+			});
+	</script>	
   </body>
 </html>

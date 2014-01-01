@@ -7,5 +7,7 @@ var debug = false;
 var handle = {}
 handle["/"] = requestHandlers.sendInterface;
 handle["/interface"] = requestHandlers.sendInterface;
+handle["/themes.css"] = requestHandlers.sendThemes;
+handle["/colorpicker.js"] = requestHandlers.sendColor;
 
 server.start(router.route,handle,debug);
