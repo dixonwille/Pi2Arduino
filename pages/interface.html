@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
  <html>
    <head>    
-	<script src="/socket.io/socket.io.js"></script>
+	   <script src="/socket.io/socket.io.js"></script>
+	   <script type="text/javascript" src="colorpicker.js"></script>
     <script>	  
 	var iosocket;
 	  
@@ -73,6 +74,11 @@
 	<input type="button" id="green" value="Green"/>
 	<input type="button" id="blue" value="Blue"/>
 	<input type="button" id="off" value="Off"/></br>
-	
+	<div id="color-picker" class="cp-default"></div>
+
+	<script type="text/javascript">
+		ColorPicker(document.getElementById('color-picker'),function(hex,hsv,rgb){
+				console.log(rgb.r, rgb.g, rgb.b);
+			});	
   </body>
 </html>
