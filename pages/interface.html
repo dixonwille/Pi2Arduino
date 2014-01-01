@@ -79,7 +79,7 @@
 
 	<script type="text/javascript">
 		ColorPicker(document.getElementById('color-picker'),function(hex,hsv,rgb){
-				iosocket.emit('pickerUp', {rgb.r, rgb.g, rgb.b});
+				iosocket.emit('pickerUp', {red:rgb.r, green:rgb.g, blue:rgb.b});
 				document.body.style.backgroundColor = hex;
 			});
 	</script>	
