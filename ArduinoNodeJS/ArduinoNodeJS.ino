@@ -1,7 +1,10 @@
+#include <LiquidCrystal.h>
+
 //The three leads of RGB LED
 int redPin = 11;
 int greenPin = 10;
 int bluePin= 9;
+LiquidCrystal lcd(12, 8, 5, 4, 3, 2);
 
 String serialDataIn;
 String data[3];
@@ -15,6 +18,8 @@ void setup()  {
   pinMode(redPin, OUTPUT);
   pinMode(greenPin, OUTPUT);
   pinMode(bluePin, OUTPUT);
+  lcd.begin(16, 2);
+  lcd.print("Start up");
   setColor(0,0,0);
 } 
 //Function that easily sets the RGB LED to the correct color
@@ -28,11 +33,26 @@ void setColor(int red, int green, int blue) {
 }
 void loop() {
   // Recieve data from Node and write it to a String
-  if(Serial.available())
-  {
+  if(Serial.available()){
     inbyte = (char)Serial.read();
-    if(inbyte >= '0' & inbyte <= '9')
-            serialDataIn += inbyte;
+    if(inbyte == '@'){
+            serialDataIn = String("@");
+            boolean stillname = true;
+            lcd.setCursor(0,0);
+            while(stillname){
+              Serial.println(String(serialDataIn));
+              inbyte = (char)Serial.read();
+               if(inbyte == '*'){
+                 stillname = false;
+                 lcd.print(String(serialDataIn));
+                 serialDataIn = String("");
+               }else if(( inbyte >= 'a' && inbyte<= 'z') || inbyte=='_'){
+                 serialDataIn += inbyte;
+               }
+            }
+            
+        }else{
+        serialDataIn += inbyte;
         if (inbyte == ','){  // Handle delimiter
             data[counter] = String(serialDataIn);
             serialDataIn = String("");
@@ -41,46 +61,47 @@ void loop() {
         if(inbyte ==  'U'){  // U for update
             data[counter] = String(serialDataIn);
             clearString();
-            Serial.println("Parsing Data...");
-            Serial.println("Red Value   = " + data[0]);
-            Serial.println("Green Value = " + data[1]);
-            Serial.println("Blue Value  = " + data[2]);
-            String red = data[0];
-            String green = data[1];
-            String blue = data[2];
+            String red = data[0].substring(0,data[0].length() - 1);
+            String green = data[1].substring(0,data[1].length() - 1);
+            String blue = data[2].substring(0,data[2].length() - 1);
             int redVal = red.toInt();
             int greenVal = green.toInt();
             int blueVal = blue.toInt();
             setColor(redVal, greenVal, blueVal);
+            lcd.setCursor(0,1);
+            lcd.print(red + "," + green + "," + blue + "#Update");
           } 
          if(inbyte == 'D'){ //D for Delay
            String delayTime = String(serialDataIn);
-           Serial.println("Delay of " + delayTime + " ms");
            delay(delayTime.toInt());
            clearString();
          }
          if(inbyte == 'O'){  //O for off
-          Serial.println("LED Off");
           setColor(0,0,0);
           clearString();
+          lcd.setCursor(0,1);
          }
          if((char)inbyte == 'R'){  //R for red
           setColor(255,0,0); 
-          Serial.println("LED Red");
           clearString();
+          lcd.setCursor(0,1);
+          lcd.print("#Red");
          }
         if(inbyte == 'G'){  //G for green
           setColor(0,255,0);
-          Serial.println("LED Green");
-          clearString(); 
+          clearString();
+          lcd.setCursor(0,1);
+          lcd.print("#Green");
          }
         if(inbyte == 'B'){  //B for blue
           setColor(0,0,255);
-          Serial.println("LED Blue");
           clearString();
+          lcd.setCursor(0,1);
+          lcd.print("#BlUe");
          }   
-     delay(50);    
-  }
+        }
+     delay(50);  
+  }  
 }
 void clearString(){
   serialDataIn = String("");
