@@ -20,7 +20,6 @@ function startServer(route,handle,debug)
 	  // in route.js to handle (var content), if it matches the a page will 
 	  // come up. Otherwise a 404 will be given. 
 	  var pathname = url.parse(request.url).pathname; 
-	  console.log("Request for " + pathname + " received");
 	  var content = route(handle,pathname,response,request,debug);
 	}
 	
@@ -57,7 +56,7 @@ function initSocketIO(httpServer,debug)
 			serialPort.write(data['red'] + ',' + data['green'] + ',' + data['blue'] + 'U');
 		});
 		socket.on('twitter',function() {
-			twit.startTwitter(twitter,serialPort);
+			twit.startTwitter(twitter,serialPort,socket);
 		});
 	
     	});

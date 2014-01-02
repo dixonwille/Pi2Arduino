@@ -1,5 +1,4 @@
 function route(handle, pathname,response,request,debug) {
-  console.log("About to route a request for " + pathname);
    //typeof probes the data type of handle[pathname]. So if 
    //handle[pathname] is a function (in both type and value)
    //,then run that function. 

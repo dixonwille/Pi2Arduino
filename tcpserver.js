@@ -18,7 +18,7 @@ function startServer(debug)
 		}else if(data.toString('utf8').trim() == 'exit'){
 			socket.end('Thank you\n');
 		}else if(data.toString('utf8').trim() == 'twitter'){
-			twit.startTwitter(twitter,serialPort);
+			twit.startTwitter(twitter,serialPort,socket);
 		}else{
 	  		serialPort.write(data);
 		}

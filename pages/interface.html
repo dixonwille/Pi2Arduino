@@ -82,12 +82,12 @@
 			;});
 		}
 
-		if(redBut.addEventListener){
-                	redBut.addEventListener("click", function() {
+		if(twitBut.addEventListener){
+                	twitBut.addEventListener("click", function() {
 				iosocket.emit('twitter');
 			}, false);
-                } else if(redBut.attachEvent){
-			redBut.attachEvent("onclick", function() {
+                } else if(twitBut.attachEvent){
+			twitBut.attachEvent("onclick", function() {
 				iosocket.emit('twitter');
 			;});
                 }
@@ -111,7 +111,7 @@
   </head>
   <body>
 <div style="float:left;">
-<a class="twitter-timeline" width='500' href="https://twitter.com/dixonwille" data-widget-id="418563008793542657">Tweets by @dixonwille</a>
+<a class="twitter-timeline" href="https://twitter.com/search?q=%23red+OR+%23blue+OR+%23green" data-widget-id="418572639632777216">Tweets about "#red OR #blue OR #green"</a></br>
 <input type="button" id="twitter" value="Use Twitter"/>
 </div>
 	<div style="float:left;">
