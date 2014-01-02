@@ -1,0 +1,11 @@
+R turns the LED red (255,0,0)
+G turns the LED green (0,255,0)
+B turns the LED blue (0,0,255)
+O turns the LED off (0,0,0)
+#,#,#U turns the LED to a Specific color (#,#,#)
+#D delays the execution by # of milliseconds
+
+ex...
+R1000DG1000DB1000DO
+This will turn the LED red then green then blue then
+off while waiting one second before each change.

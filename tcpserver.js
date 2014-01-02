@@ -1,6 +1,6 @@
 var net = require('net'),
-SerialPort = require("serialport").SerialPort
-
+SerialPort = require("serialport").SerialPort,
+fs = require('fs')
 var serialPort;
 var portName = '/dev/ttyACM0'; //change this to your Arduino port
 
@@ -9,8 +9,15 @@ function startServer(debug)
 	// on request event
 	function onRequest(socket) {
 	  console.log("Socket Opened!");
+	  socket.setEncoding('utf8');
 	  socket.on('data', function(data){
-	  	serialPort.write(data);
+		if(data.toString('utf8').trim() == 'help'){
+			socket.write(fs.readFileSync(__dirname+"/pages/helpTcp.txt"));
+		}else if(data.toString('utf8').trim() == 'exit'){
+			socket.end('Thank you\n');
+		}else{
+	  		serialPort.write(data);
+		}
 	  });
 	  socket.on('end', function(){console.log("Socket Closed")});
 	}
