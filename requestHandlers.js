@@ -24,6 +24,10 @@ function sendColor(response) {
  response.end(java);
 };
 
+function twitter(respone) {
+
+};
+
 exports.sendThemes = sendThemes;
 exports.sendColor = sendColor;
 exports.sendInterface = sendInterface;
