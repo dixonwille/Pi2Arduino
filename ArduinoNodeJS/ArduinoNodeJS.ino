@@ -40,7 +40,6 @@ void loop() {
             boolean stillname = true;
             lcd.setCursor(0,0);
             while(stillname){
-              Serial.println(String(serialDataIn));
               inbyte = (char)Serial.read();
                if(inbyte == '*'){
                  stillname = false;
@@ -71,6 +70,9 @@ void loop() {
             lcd.setCursor(0,1);
             lcd.print(red + "," + green + "," + blue + "#Update");
           } 
+          if(inbyte == 'C') {//C for clear
+            lcd.clear();
+          }
          if(inbyte == 'D'){ //D for Delay
            String delayTime = String(serialDataIn);
            delay(delayTime.toInt());
@@ -79,7 +81,6 @@ void loop() {
          if(inbyte == 'O'){  //O for off
           setColor(0,0,0);
           clearString();
-          lcd.setCursor(0,1);
          }
          if((char)inbyte == 'R'){  //R for red
           setColor(255,0,0); 
@@ -95,9 +96,9 @@ void loop() {
          }
         if(inbyte == 'B'){  //B for blue
           setColor(0,0,255);
-          clearString();
+          clearString();          
           lcd.setCursor(0,1);
-          lcd.print("#BlUe");
+          lcd.print("#Blue");
          }   
         }
      delay(50);  
