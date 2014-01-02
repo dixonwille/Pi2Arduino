@@ -41,19 +41,19 @@ function initSocketIO(httpServer,debug)
 		console.log("user connected");
 		socket.emit('onconnection');
 		socket.on('buttonRed', function() {
-			serialPort.write('R');
+			serialPort.write('C@Web_Browser*R');
 		});
 		socket.on('buttonGreen', function() {
-			serialPort.write('G');
+			serialPort.write('C@Web_Browser*G');
 		});
 		socket.on('buttonBlue', function() {
-			serialPort.write('B');
+			serialPort.write('C@Web_Browser*B');
 		});
 		socket.on('buttonOff', function() {
 			serialPort.write('O');
 		});
 		socket.on('pickerUp', function(data) {
-			serialPort.write(data['red'] + ',' + data['green'] + ',' + data['blue'] + 'U');
+			serialPort.write('C@Web_Browser*'+data['red'] + ',' + data['green'] + ',' + data['blue'] + 'U');
 		});
 		socket.on('twitter',function() {
 			twit.startTwitter(twitter,serialPort,socket);

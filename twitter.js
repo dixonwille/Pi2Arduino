@@ -17,17 +17,17 @@ function startTwitter(twitter,serialPort,socket) {
 				var tweet = JSON.parse( json );
       				if (tweet.text && tweet.user) {
 						if (tweet.text.indexOf('#red') > -1){
-          						serialPort.write('R');
+          						serialPort.write('C@'+tweet.user.screen_name+'*R');
           						setTimeout(function() {
             							serialPort.write('O');
           						}, 5000);
 						}else if(tweet.text.indexOf('#green') > -1){
-          						serialPort.write('G');
+          						serialPort.write('C@'+tweet.user.screen_name+'*G');
           						setTimeout(function() {
             							serialPort.write('O');
           						}, 5000);
 						}else if(tweet.text.indexOf('#blue') > -1){
-          						serialPort.write('B');
+          						serialPort.write('C@'+tweet.user.screen_name+'*B');
           						setTimeout(function() {
             							serialPort.write('O');
           						}, 5000);
@@ -45,7 +45,7 @@ function startTwitter(twitter,serialPort,socket) {
 							var redVal = vals[0];
 							var greenVal = vals[1];
 							var blueVal = vals[2];
-							serialPort.write(redVal+','+greenVal+','+blueVal+'U');
+							serialPort.write('C@'+tweet.user.screen_name+'*'+redVal+','+greenVal+','+blueVal+'U');
           						setTimeout(function() {
             							serialPort.write('O');
           						}, 5000);
