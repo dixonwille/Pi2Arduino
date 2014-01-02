@@ -45,7 +45,7 @@ void loop() {
                  stillname = false;
                  lcd.print(String(serialDataIn));
                  serialDataIn = String("");
-               }else if(( inbyte >= 'a' && inbyte<= 'z') || inbyte=='_'){
+               }else if(( inbyte >= 'a' && inbyte<= 'z') || inbyte=='_' || (inbyte >= 'A' && inbyte<='Z') || (inbyte >= '0' && inbyte <='9')){
                  serialDataIn += inbyte;
                }
             }
