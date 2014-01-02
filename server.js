@@ -2,7 +2,9 @@ var fs = require('fs'),
 http = require('http'),
 socketio = require('socket.io'),
 url = require("url"), 
-SerialPort = require("serialport").SerialPort
+SerialPort = require("serialport").SerialPort,
+twitter = require('twitter-api').createClient(),
+twit = require('./twitter')
 
 var socketServer;
 var serialPort;
@@ -53,6 +55,9 @@ function initSocketIO(httpServer,debug)
 		});
 		socket.on('pickerUp', function(data) {
 			serialPort.write(data['red'] + ',' + data['green'] + ',' + data['blue'] + 'U');
+		});
+		socket.on('twitter',function() {
+			twit.startTwitter(twitter,serialPort);
 		});
 	
     	});

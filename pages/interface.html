@@ -31,6 +31,7 @@
 		var greenBut = document.getElementById("green");
 		var blueBut = document.getElementById("blue");
 		var offBut = document.getElementById("off");
+		var twitBut = document.getElementById("twitter");
 		var updateBut = document.getElementById("update");		
 
 		if(redBut.addEventListener){
@@ -81,6 +82,16 @@
 			;});
 		}
 
+		if(redBut.addEventListener){
+                	redBut.addEventListener("click", function() {
+				iosocket.emit('twitter');
+			}, false);
+                } else if(redBut.attachEvent){
+			redBut.attachEvent("onclick", function() {
+				iosocket.emit('twitter');
+			;});
+                }
+
 		if(updateBut.addEventListener){
                 	updateBut.addEventListener("click", function() {
 				iosocket.emit('pickerUp',{red:redText.value,green:greenText.value,blue:blueText.value});
@@ -99,6 +110,11 @@
     </script>
   </head>
   <body>
+<div style="float:left;">
+<a class="twitter-timeline" width='500' href="https://twitter.com/dixonwille" data-widget-id="418563008793542657">Tweets by @dixonwille</a>
+<input type="button" id="twitter" value="Use Twitter"/>
+</div>
+	<div style="float:left;">
 	<h2>Data to Arduino</h2>
 	<input type="button" id="red" value="Red"/>
 	<input type="button" id="green" value="Green"/>
@@ -108,9 +124,11 @@
 	<input type="text" id="gText" value="0"/>
 	<input type="text" id="bText" value="0"/>
 	<input type="button" id="update" value="Update"/></br>
-	The Red on the LED is very Bright half it to get the result you might be looking for!</br>
+	The Red on the LED is very Bright half it to get the result you might be looking for!</br></br>
 	<div id="color-picker" class="cp-default"></div>
+	</div>
 
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 	<script type="text/javascript">
 		ColorPicker(document.getElementById('color-picker'),function(hex,hsv,rgb){
 				redText.value=rgb.r;

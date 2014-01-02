@@ -1,6 +1,7 @@
 var net = require('net'),
 SerialPort = require("serialport").SerialPort,
-twitter = require('twitter-api').createClient();
+twitter = require('twitter-api').createClient(),
+twit = require('./twitter'),
 fs = require('fs')
 var serialPort;
 var portName = '/dev/ttyACM0'; //change this to your Arduino port
@@ -17,52 +18,7 @@ function startServer(debug)
 		}else if(data.toString('utf8').trim() == 'exit'){
 			socket.end('Thank you\n');
 		}else if(data.toString('utf8').trim() == 'twitter'){
-			twitter.setAuth (
-    				'4wZdTA2lTCVu4aKE3tJCsw',
-    				'Xp2klAp02qyJLOPsMwnHsVx1oBTkAZDOfdxuzquaI',
-    				'30471238-iIpNSeZSKpNop3mhXWBUs201gYIFEsB0McKmpeS2V',
-    				'wLkq4U2uIek8GXYdZBV31JRBqrO9NEOHFtmRCtLgTGx60'
-  			);
-			socket.write('Now updating using twitter\n');
-			twitter.stream('statuses/filter', {
-      				track: '#red,#green,#blue,#exit,#update'
-    			}, function(json) {
-				var tweet = JSON.parse( json );
-      				if (tweet.text && tweet.user) {
-        				if (tweet.user.screen_name === 'dixonwille') {
-						if (tweet.text.indexOf('#red') > -1){
-          						serialPort.write('R');
-          						setTimeout(function() {
-            							serialPort.write('O');
-          						}, 5000);
-						}else if(tweet.text.indexOf('#green') > -1){
-          						serialPort.write('G');
-          						setTimeout(function() {
-            							serialPort.write('O');
-          						}, 5000);
-						}else if(tweet.text.indexOf('#blue') > -1){
-          						serialPort.write('B');
-          						setTimeout(function() {
-            							serialPort.write('O');
-          						}, 5000);
-						}else if(tweet.text.indexOf('#exit') > -1){
-          						twitter.abort();
-							socket.write('Back to normal\n');
-						}else if(tweet.text.indexOf('#update') > -1){
-          						var last = tweet.text.indexOf('#update');
-							var txt = tweet.text.slice(0,last);
-							var vals = txt.split(',');
-							var redVal = vals[0];
-							var greenVal = vals[1];
-							var blueVal = vals[2];
-							serialPort.write(redVal+','+greenVal+','+blueVal+'U');
-          						setTimeout(function() {
-            							serialPort.write('O');
-          						}, 5000);
-						}
-					}
-      			}
-    			});
+			twit.startTwitter(twitter,serialPort);
 		}else{
 	  		serialPort.write(data);
 		}
